@@ -1,0 +1,22 @@
+Explanation (4 lines):
+1. Scaling before the split computes mean/std using validation rows too, so information about unseen data leaks into training.
+2. The correct way fits the scaler on the training set only and merely applies (transform) those statistics to validation/test.
+3. With a simple scaler and logistic regression the score difference is tiny, but it is a real bias and grows with
+   target-aware steps (imputation, feature selection, target encoding) or small datasets.
+4. Putting all preprocessing inside a Pipeline makes this automatic, because it is re-fitted on the training fold in every CV split.
+
+== Supervised vs unsupervised ==
+Spam detection          -> Supervised (classification: labelled spam / not spam emails)
+Customer segmentation   -> Unsupervised (clustering: no labels, find groups, e.g. K-Means)
+House price prediction  -> Supervised (regression: numeric target = price)
+Anomaly detection       -> Unsupervised (usually; learn 'normal' and flag outliers, e.g. Isolation Forest;
+                           it becomes supervised if labelled fraud examples exist)
+
+== ML workflow in 7 steps ==
+1. Define the problem & success metric (e.g. predict default; optimise recall/ROC-AUC).
+2. Collect and understand the data (EDA, target balance, missing values, leakage risks).
+3. Split into train / validation / test first (stratified) and put the test set aside.
+4. Preprocess & engineer features (impute, encode, scale) inside a Pipeline fitted on train only.
+5. Train baseline and candidate models; compare with cross-validation on train/validation.
+6. Tune hyper-parameters (GridSearchCV / RandomizedSearchCV), pick threshold, check over-fitting.
+7. Evaluate the single best model once on the test set, save it (joblib) and monitor in production.

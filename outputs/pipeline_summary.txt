@@ -1,0 +1,23 @@
+SAVED PIPELINE: outputs/loan_pipeline.joblib
+==================================================
+
+Steps (in order):
+ 1. features -> FunctionTransformer(add_features_clf): date parts, income_to_loan, log_income, log_loan_amount
+ 2. prep/num: SimpleImputer -> StandardScaler on ['age', 'income', 'credit_score', 'employment_years', 'num_open_accounts', 'debt_to_income', 'loan_amount', 'app_month', 'app_dayofweek', 'app_quarter', 'income_to_loan', 'log_income', 'log_loan_amount']
+ 2. prep/ord: SimpleImputer -> OrdinalEncoder on ['education']
+ 2. prep/cat: SimpleImputer -> OneHotEncoder on ['home_ownership', 'loan_purpose']
+ 3. model -> LogisticRegression
+
+Final model input features (23):
+ age, income, credit_score, employment_years, num_open_accounts, debt_to_income, loan_amount, app_month, app_dayofweek, app_quarter, income_to_loan, log_income, log_loan_amount, education, home_ownership_Mortage, home_ownership_Own, home_ownership_Rent, loan_purpose_car, loan_purpose_debt_consolidation, loan_purpose_education, loan_purpose_home_improvement, loan_purpose_medical, loan_purpose_small_business
+
+3 NEW RAW ROWS:
+application_date  age   income education  credit_score  employment_years  num_open_accounts  debt_to_income home_ownership     loan_purpose  loan_amount
+      2026-03-15   29  32000.0  Bachelor           540               2.0                  9            0.62           Rent   small_business        38000
+      2026-07-02   45 120000.0    Master           780              15.0                  4            0.18            Own home_improvement        15000
+      2026-09-21   38      NaN       NaN           690               NaN                  5            0.35        Mortage              car        14000
+
+PREDICTIONS (1 = default):
+ Row 1: predicted 0 (P(default) = 0.477)
+ Row 2: predicted 0 (P(default) = 0.103)
+ Row 3: predicted 0 (P(default) = 0.171)
