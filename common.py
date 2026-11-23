@@ -28,7 +28,7 @@ def generate_data(n=6000, seed=42):
     credit=np.clip(rng.normal(660,70,n)+15*edu_i,300,850).round(0)
     emp=np.clip((age-21)*rng.uniform(0.1,0.8,n),0,40).round(1)
     open_acc=rng.poisson(5,n)
-    dti=np.clip(rng.normal(0.35,0.12,n),0.02,0.).round(3)
+    dti=np.clip(rng.normal(0.35,0.12,n),0.02,0.9).round(3)
     home=rng.choice(["Rent","Own","Mortage"],n,p=[0.42,0.18,0.40])
     purpose=rng.choice(["debt_consolidation","home_improvement","car",
                         "small_business","education","medical"],
